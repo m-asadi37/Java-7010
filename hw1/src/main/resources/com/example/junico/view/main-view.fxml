@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.junico.controller.MainController">
+
+    <top>
+        <VBox spacing="10" style="-fx-padding: 15;">
+
+            <Label text="Create New Post"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <TextArea fx:id="postTextArea"
+                      prefHeight="100"
+                      wrapText="true"/>
+
+            <Button text="Publish Post"
+                    onAction="#publishPost"/>
+
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true">
+
+            <VBox fx:id="postsContainer"
+                  spacing="10"
+                  style="-fx-padding: 15;"/>
+
+        </ScrollPane>
+    </center>
+
+</BorderPane>

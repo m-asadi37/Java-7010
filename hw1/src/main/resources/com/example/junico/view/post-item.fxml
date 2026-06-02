@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.junico.controller.PostItemController"
+      spacing="10"
+      style="
+            -fx-padding: 15;
+            -fx-border-color: lightgray;
+            -fx-border-radius: 10;
+            -fx-background-radius: 10;
+            -fx-background-color: white;
+      ">
+
+    <Label fx:id="creatorLabel"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <Label fx:id="contentLabel"
+           wrapText="true"/>
+
+    <HBox spacing="10">
+
+        <Label fx:id="likesLabel"
+               text="Likes: 0"/>
+
+        <Button text="Like"
+                onAction="#likePost"/>
+
+    </HBox>
+
+</VBox>
