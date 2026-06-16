@@ -45,6 +45,8 @@ public class Main {
         list1.add("c");
         list1.add("c");
         list1.add("d");
+        list1.add(null);
+        list1.add(null);
         System.out.println(list1);
         System.out.println(list1.get(3));
 
