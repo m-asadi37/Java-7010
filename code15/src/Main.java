@@ -20,6 +20,7 @@ public class Main {
         list1.add(null);
 
         System.out.println(list1.get(5));
+        System.out.println(list1.indexOf("d"));
 
         List<String> list2 = list1.subList(2, 5);
         System.out.println(list1);
