@@ -1,18 +1,22 @@
-
 import entity.*;
-import service.*;
+import service.OfferService;
+import service.ProjectService;
+import service.SkillService;
+import service.UserService;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    
+
     // سرویس‌هایی که خودتان پیاده‌سازی خواهید کرد
     private static final UserService userService = new UserService();
     private static final ProjectService projectService = new ProjectService();
     private static final OfferService offerService = new OfferService();
     private static final SkillService skillService = new SkillService();
-    
+
     private static User currentUser;
 
     public static void main(String[] args) {
@@ -31,9 +35,9 @@ public class Main {
         System.out.println("2. ثبت نام");
         System.out.println("3. خروج");
         System.out.print("انتخاب شما: ");
-        
+
         int choice = getIntInput();
-        
+
         switch (choice) {
             case 1:
                 login();
@@ -52,9 +56,9 @@ public class Main {
 
     private static void showMainMenu() {
         System.out.println("\n=== منوی اصلی ===");
-        System.out.println("خوش آمدید " + currentUser.getUsername());
-        System.out.println("موجودی: " + currentUser.getBalance() + " تومان");
-        
+        System.out.printf("welcome %s\n", currentUser.getUsername());
+        System.out.printf("balance: $%,.0f\n", currentUser.getBalance());
+
         if (currentUser.getType() == UserType.CLIENT) {
             showClientMenu();
         } else {
@@ -71,9 +75,9 @@ public class Main {
         System.out.println("6. افزایش موجودی");
         System.out.println("7. خروج از حساب");
         System.out.print("انتخاب شما: ");
-        
+
         int choice = getIntInput();
-        
+
         switch (choice) {
             case 1:
                 createProject();
@@ -82,13 +86,13 @@ public class Main {
                 viewMyProjects();
                 break;
             case 3:
-                viewProjectOffers();
+//                viewProjectOffers();
                 break;
             case 4:
-                selectOffer();
+//                selectOffer();
                 break;
             case 5:
-                completeProject();
+//                completeProject();
                 break;
             case 6:
                 addBalance();
@@ -115,13 +119,13 @@ public class Main {
         
         switch (choice) {
             case 1:
-                viewOpenProjects();
+//                viewOpenProjects();
                 break;
             case 2:
-                submitOffer();
+//                submitOffer();
                 break;
             case 3:
-                viewMyOffers();
+//                viewMyOffers();
                 break;
             case 4:
                 addSkill();
@@ -191,11 +195,9 @@ public class Main {
             System.out.print("نام مهارت: ");
             String skillName = scanner.nextLine();
             if (skillName.equalsIgnoreCase("done")) break;
-            
-            Skill skill = skillService.findOrCreateSkill(skillName);
-            if (skill != null) {
-                skills.add(skill);
-            }
+
+            Skill skill = Skill.valueOf(skillName);
+            skills.add(skill);
         }
         
         Project project = projectService.createProject((Client) currentUser, title, description, price, skills, hours);
@@ -217,88 +219,89 @@ public class Main {
         }
     }
 
-    private static void viewProjectOffers() {
-        System.out.print("شناسه پروژه: ");
-        long projectId = getLongInput();
-        
-        Set<Offer> offers = offerService.getOffersByProject(projectId);
-        if (offers.isEmpty()) {
-            System.out.println("هیچ پیشنهادی برای این پروژه وجود ندارد.");
-        } else {
-            for (Offer offer : offers) {
-                System.out.println(offer);
-            }
-        }
-    }
-
-    private static void selectOffer() {
-        System.out.print("شناسه پیشنهاد: ");
-        long offerId = getLongInput();
-        
-        boolean success = offerService.selectOffer(offerId, (Client) currentUser);
-        if (success) {
-            System.out.println("پیشنهاد با موفقیت انتخاب شد!");
-        } else {
-            System.out.println("خطا در انتخاب پیشنهاد!");
-        }
-    }
-
-    private static void completeProject() {
-        System.out.print("شناسه پروژه: ");
-        long projectId = getLongInput();
-        
-        boolean success = projectService.completeProject(projectId, (Client) currentUser);
-        if (success) {
-            System.out.println("پروژه با موفقیت تکمیل شد!");
-        } else {
-            System.out.println("خطا در تکمیل پروژه!");
-        }
-    }
-
-    // متدهای فریلنسر
-    private static void viewOpenProjects() {
-        Set<Project> projects = projectService.getOpenProjects();
-        if (projects.isEmpty()) {
-            System.out.println("هیچ پروژه باز وجود ندارد.");
-        } else {
-            for (Project project : projects) {
-                System.out.println(project);
-            }
-        }
-    }
-
-    private static void submitOffer() {
-        System.out.print("شناسه پروژه: ");
-        long projectId = getLongInput();
-        System.out.print("ساعت پیشنهادی: ");
-        long hours = getLongInput();
-        System.out.print("قیمت پیشنهادی: ");
-        double price = getDoubleInput();
-        
-        Offer offer = offerService.submitOffer((Freelancer) currentUser, projectId, hours, price);
-        if (offer != null) {
-            System.out.println("پیشنهاد با موفقیت ارسال شد! شناسه: " + offer.getId());
-        } else {
-            System.out.println("خطا در ارسال پیشنهاد!");
-        }
-    }
-
-    private static void viewMyOffers() {
-        Set<Offer> offers = offerService.getFreelancerOffers((Freelancer) currentUser);
-        if (offers.isEmpty()) {
-            System.out.println("شما هیچ پیشنهادی ارسال نکرده‌اید.");
-        } else {
-            for (Offer offer : offers) {
-                System.out.println(offer);
-            }
-        }
-    }
+    //    private static void viewProjectOffers() {
+//        System.out.print("شناسه پروژه: ");
+//        long projectId = getLongInput();
+//
+//        Set<Offer> offers = offerService.getOffersByProject(projectId);
+//        if (offers.isEmpty()) {
+//            System.out.println("هیچ پیشنهادی برای این پروژه وجود ندارد.");
+//        } else {
+//            for (Offer offer : offers) {
+//                System.out.println(offer);
+//            }
+//        }
+//    }
+//
+//    private static void selectOffer() {
+//        System.out.print("شناسه پیشنهاد: ");
+//        long offerId = getLongInput();
+//
+//        boolean success = offerService.selectOffer(offerId, (Client) currentUser);
+//        if (success) {
+//            System.out.println("پیشنهاد با موفقیت انتخاب شد!");
+//        } else {
+//            System.out.println("خطا در انتخاب پیشنهاد!");
+//        }
+//    }
+//
+//    private static void completeProject() {
+//        System.out.print("شناسه پروژه: ");
+//        long projectId = getLongInput();
+//
+//        boolean success = projectService.completeProject(projectId, (Client) currentUser);
+//        if (success) {
+//            System.out.println("پروژه با موفقیت تکمیل شد!");
+//        } else {
+//            System.out.println("خطا در تکمیل پروژه!");
+//        }
+//    }
+//
+//    // متدهای فریلنسر
+//    private static void viewOpenProjects() {
+//        Set<Project> projects = projectService.getOpenProjects();
+//        if (projects.isEmpty()) {
+//            System.out.println("هیچ پروژه باز وجود ندارد.");
+//        } else {
+//            for (Project project : projects) {
+//                System.out.println(project);
+//            }
+//        }
+//    }
+//
+//    private static void submitOffer() {
+//        System.out.print("شناسه پروژه: ");
+//        long projectId = getLongInput();
+//        System.out.print("ساعت پیشنهادی: ");
+//        long hours = getLongInput();
+//        System.out.print("قیمت پیشنهادی: ");
+//        double price = getDoubleInput();
+//
+//        Offer offer = offerService.submitOffer((Freelancer) currentUser, projectId, hours, price);
+//        if (offer != null) {
+//            System.out.println("پیشنهاد با موفقیت ارسال شد! شناسه: " + offer.getId());
+//        } else {
+//            System.out.println("خطا در ارسال پیشنهاد!");
+//        }
+//    }
+//
+//    private static void viewMyOffers() {
+//        Set<Offer> offers = offerService.getFreelancerOffers((Freelancer) currentUser);
+//        if (offers.isEmpty()) {
+//            System.out.println("شما هیچ پیشنهادی ارسال نکرده‌اید.");
+//        } else {
+//            for (Offer offer : offers) {
+//                System.out.println(offer);
+//            }
+//        }
+//    }
 
     private static void addSkill() {
         System.out.print("نام مهارت: ");
         String skillName = scanner.nextLine();
-        
-        boolean success = skillService.addSkillToFreelancer((Freelancer) currentUser, skillName);
+
+        Skill skill = Skill.valueOf(skillName);
+        boolean success = ((Freelancer) currentUser).addSkill(skill);
         if (success) {
             System.out.println("مهارت با موفقیت اضافه شد!");
         } else {
@@ -311,9 +314,7 @@ public class Main {
         if (skills.isEmpty()) {
             System.out.println("شما هیچ مهارتی ندارید.");
         } else {
-            for (Skill skill : skills) {
-                System.out.println(skill);
-            }
+            System.out.println(skills);
         }
     }
 

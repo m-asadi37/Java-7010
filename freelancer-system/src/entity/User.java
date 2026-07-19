@@ -49,8 +49,8 @@ public class User {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void addBalance(double balance) {
+        this.balance += balance;
     }
 
     @Override
@@ -69,12 +69,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", type=" + type +
-                ", balance=" + balance +
-                '}';
+        return "User{id=%d, username='%s', password='%s', type=%s, balance=%,.0f}"
+                .formatted(id, username, password, type, balance);
     }
 }

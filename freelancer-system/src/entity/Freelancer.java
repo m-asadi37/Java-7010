@@ -16,8 +16,8 @@ public class Freelancer extends User {
         return skills;
     }
 
-    public void addSkill(Skill skill) {
-        this.skills.add(skill);
+    public boolean addSkill(Skill skill) {
+        return this.skills.add(skill);
     }
 
     @Override
