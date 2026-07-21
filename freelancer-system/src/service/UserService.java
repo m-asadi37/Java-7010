@@ -10,8 +10,12 @@ import java.util.Set;
 
 public class UserService {
 
-    private final Set<User> USERS = new LinkedHashSet<>();
+    private static final Set<User> USERS = new LinkedHashSet<>();
 
+    static {
+        USERS.add(new Client("c1", "123"));
+        USERS.add(new Freelancer("f1", "123"));
+    }
     public User login(String user, String pass) {
         for (User ind : USERS) {
             if (ind.getUsername().equals(user) && ind.getPassword().equals(pass)) {

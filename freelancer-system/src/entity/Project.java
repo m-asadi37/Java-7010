@@ -111,4 +111,8 @@ public class Project {
                 ", offers=" + offers +
                 '}';
     }
+
+    public boolean addOffer(Offer offer) {
+        return this.offers.add(offer);
+    }
 }

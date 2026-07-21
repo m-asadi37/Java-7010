@@ -119,10 +119,10 @@ public class Main {
         
         switch (choice) {
             case 1:
-//                viewOpenProjects();
+                viewOpenProjects();
                 break;
             case 2:
-//                submitOffer();
+                submitOffer();
                 break;
             case 3:
 //                viewMyOffers();
@@ -256,35 +256,32 @@ public class Main {
 //            System.out.println("خطا در تکمیل پروژه!");
 //        }
 //    }
-//
-//    // متدهای فریلنسر
-//    private static void viewOpenProjects() {
-//        Set<Project> projects = projectService.getOpenProjects();
-//        if (projects.isEmpty()) {
-//            System.out.println("هیچ پروژه باز وجود ندارد.");
-//        } else {
-//            for (Project project : projects) {
-//                System.out.println(project);
-//            }
-//        }
-//    }
-//
-//    private static void submitOffer() {
-//        System.out.print("شناسه پروژه: ");
-//        long projectId = getLongInput();
-//        System.out.print("ساعت پیشنهادی: ");
-//        long hours = getLongInput();
-//        System.out.print("قیمت پیشنهادی: ");
-//        double price = getDoubleInput();
-//
-//        Offer offer = offerService.submitOffer((Freelancer) currentUser, projectId, hours, price);
-//        if (offer != null) {
-//            System.out.println("پیشنهاد با موفقیت ارسال شد! شناسه: " + offer.getId());
-//        } else {
-//            System.out.println("خطا در ارسال پیشنهاد!");
-//        }
-//    }
-//
+
+    private static void viewOpenProjects() {
+        Set<Project> projects = projectService.getOpenProjects();
+        if (projects.isEmpty()) {
+            System.out.println("هیچ پروژه باز وجود ندارد.");
+        } else {
+            System.out.println(projects);
+        }
+    }
+
+    private static void submitOffer() {
+        System.out.print("شناسه پروژه: ");
+        long projectId = getLongInput();
+        System.out.print("ساعت پیشنهادی: ");
+        long hours = getLongInput();
+        System.out.print("قیمت پیشنهادی: ");
+        double price = getDoubleInput();
+
+        Offer offer = offerService.submitOffer((Freelancer) currentUser, projectId, hours, price);
+        if (offer != null) {
+            System.out.println("پیشنهاد با موفقیت ارسال شد! شناسه: " + offer.getId());
+        } else {
+            System.out.println("خطا در ارسال پیشنهاد!");
+        }
+    }
+
 //    private static void viewMyOffers() {
 //        Set<Offer> offers = offerService.getFreelancerOffers((Freelancer) currentUser);
 //        if (offers.isEmpty()) {
